@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Container } from "./styles";
+import SearchContext from "./context";
+
 import Tabs from "./Tabs";
 
+import { Container, Header, CallToAction } from "./styles";
+
 export default function SearchBox() {
+  const [searchType, setSearchType] = useState("car");
+
   return (
     <Container>
-      <Tabs />
+      <SearchContext.Provider value={{ searchType, setSearchType }}>
+        <Header>
+          <Tabs />
+          <CallToAction href="#">
+            Vender {searchType === "car" ? "meu Carro" : "minha Moto"}
+          </CallToAction>
+        </Header>
+      </SearchContext.Provider>
     </Container>
   );
 }

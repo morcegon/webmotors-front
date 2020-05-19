@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import SearchContext from "../context";
 
 import { Container, Tab, Icon, Label } from "./styles";
 
@@ -6,7 +8,7 @@ import { ReactComponent as CarIcon } from "../../../assets/images/car_icon_gray.
 import { ReactComponent as BikeIcon } from "../../../assets/images/bike_icon_gray.svg";
 
 export default function Tabs() {
-  const [tabSelected, setTabSelected] = useState("car");
+  const { searchType, setSearchType } = useContext(SearchContext);
 
   const tabs = [
     {
@@ -26,8 +28,8 @@ export default function Tabs() {
       return (
         <Tab
           key={tab.name}
-          className={`${tabSelected === tab.name ? "is-active" : ""}`}
-          onClick={() => setTabSelected(tab.name)}
+          className={`${searchType === tab.name ? "is-active" : ""}`}
+          onClick={() => setSearchType(tab.name)}
         >
           <Icon>{tab.icon}</Icon>
           <Label className="label">
