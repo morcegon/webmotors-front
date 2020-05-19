@@ -5,6 +5,7 @@ import SearchContext from "./context";
 import Tabs from "./Tabs";
 
 import { Container, Header, CallToAction } from "./styles";
+import SearchForm from "./SearchForm";
 
 export default function SearchBox() {
   const [searchType, setSearchType] = useState("car");
@@ -18,6 +19,7 @@ export default function SearchBox() {
             Vender {searchType === "car" ? "meu Carro" : "minha Moto"}
           </CallToAction>
         </Header>
+        <SearchForm />
       </SearchContext.Provider>
     </Container>
   );
