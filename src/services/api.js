@@ -15,6 +15,21 @@ export async function getModels(makeId) {
         MakeID: makeId,
       },
     });
+
     return resp.data;
   } catch (e) {}
+}
+
+export async function getVersions(modelId) {
+  try {
+    const resp = await axios.get(`${baseApiUrl}/version`, {
+      params: {
+        ModelID: modelId,
+      },
+    });
+
+    return resp.data;
+  } catch (e) {
+    console.log(e);
+  }
 }

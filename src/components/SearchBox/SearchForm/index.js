@@ -5,7 +5,7 @@ import { Row, Column } from "../../../styles/grid";
 import { Field, Label } from "../../../styles/form";
 import CheckBox from "../../FormComponents/CheckBox";
 
-import { getMakes, getModels } from "../../../services/api";
+import { getMakes, getModels, getVersions } from "../../../services/api";
 
 import { FiMapPin } from "react-icons/fi";
 import Select from "../../FormComponents/Select";
@@ -13,7 +13,41 @@ import Select from "../../FormComponents/Select";
 export default function SearchForm() {
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
+  const [versions, setVersions] = useState([]);
+
   const [selectedMake, setSelectedMake] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedVersion, setSelectedVersion] = useState(null);
+
+  const years = [
+    {
+      ID: 2020,
+      Name: 2020,
+    },
+    {
+      ID: 2019,
+      Name: 2020,
+    },
+    {
+      ID: 2018,
+      Name: 2020,
+    },
+  ];
+
+  const prices = [
+    {
+      ID: 100000,
+      Name: "Até R$ 100.000",
+    },
+    {
+      ID: 50000,
+      Name: "Até R$ 50.000",
+    },
+    {
+      ID: 30000,
+      Name: "Até R$ 30.000",
+    },
+  ];
 
   const fetchMakes = useCallback(async () => {
     const resp = await getMakes();
@@ -22,8 +56,12 @@ export default function SearchForm() {
 
   const fetchModel = useCallback(async makeId => {
     const resp = await getModels(makeId);
-    console.log(resp);
     setModels(resp);
+  }, []);
+
+  const fetchVersion = useCallback(async modelId => {
+    const resp = await getVersions(modelId);
+    setVersions(resp);
   }, []);
 
   useEffect(() => {
@@ -35,6 +73,12 @@ export default function SearchForm() {
       fetchModel(selectedMake);
     }
   }, [fetchModel, selectedMake]);
+
+  useEffect(() => {
+    if (selectedModel) {
+      fetchVersion(selectedModel);
+    }
+  }, [fetchVersion, selectedModel]);
 
   return (
     <Container>
@@ -73,8 +117,34 @@ export default function SearchForm() {
               label="Modelo"
               placeHolder="Todos"
               options={models}
-              onSelected={setSelectedMake}
+              onSelected={setSelectedModel}
               disabled={models.length === 0}
+            />
+          </Field>
+        </Column>
+      </Row>
+
+      <Row>
+        <Column size={3}>
+          <Field>
+            <Select placeHolder="Ano desejado" options={years} />
+          </Field>
+        </Column>
+
+        <Column size={3}>
+          <Field>
+            <Select placeHolder="Faixa de preço" options={prices} />
+          </Field>
+        </Column>
+
+        <Column size={6}>
+          <Field>
+            <Select
+              label="Versão"
+              placeHolder="Todas"
+              options={versions}
+              onSelected={setSelectedVersion}
+              disabled={versions.length === 0}
             />
           </Field>
         </Column>

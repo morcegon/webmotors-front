@@ -25,7 +25,7 @@ export default function Select({
   return (
     <Container disabled={disabled}>
       <ClickArea onClick={() => setShowOptions(!showOptions)}>
-        <Label>{label}:</Label>
+        {label && <Label>{label}:</Label>}
         <span className="value">{selected}</span>
       </ClickArea>
       {!disabled && showOptions && (
@@ -43,8 +43,15 @@ export default function Select({
 }
 
 Select.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeHolder: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelected: PropTypes.func.isRequired,
+  onSelected: PropTypes.func,
+};
+
+Select.propDefaults = {
+  label: null,
+  onSelected: () => {
+    return;
+  },
 };

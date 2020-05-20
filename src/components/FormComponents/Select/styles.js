@@ -45,6 +45,7 @@ export const OptionList = styled.div`
   position: absolute;
   top: 100%;
   width: 100%;
+  z-index: 50;
 `;
 
 export const Option = styled.div`
