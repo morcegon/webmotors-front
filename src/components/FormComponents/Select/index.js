@@ -5,7 +5,13 @@ import { ClickArea, Container, OptionList, Option } from "./styles";
 
 import PropTypes from "prop-types";
 
-export default function Select({ label, placeHolder, options, onSelected }) {
+export default function Select({
+  disabled,
+  label,
+  options,
+  onSelected,
+  placeHolder,
+}) {
   const [showOptions, setShowOptions] = useState(false);
   const [selected, setSelected] = useState(placeHolder);
 
@@ -17,12 +23,12 @@ export default function Select({ label, placeHolder, options, onSelected }) {
   };
 
   return (
-    <Container>
-      <ClickArea onClick={() => setShowOptions(true)}>
+    <Container disabled={disabled}>
+      <ClickArea onClick={() => setShowOptions(!showOptions)}>
         <Label>{label}:</Label>
         <span className="value">{selected}</span>
       </ClickArea>
-      {showOptions && (
+      {!disabled && showOptions && (
         <OptionList>
           <Option onClick={() => onSelect(false)}>{placeHolder}</Option>
           {options.map(option => (

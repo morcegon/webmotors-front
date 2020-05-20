@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   align-items: center;
@@ -21,6 +21,12 @@ export const Container = styled.div`
     right: 0;
     width: 0;
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+    `}
 `;
 
 export const ClickArea = styled.div`
