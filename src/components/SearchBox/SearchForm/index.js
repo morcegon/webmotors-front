@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
-import { Container } from "./styles";
+import { AdvancedSearch, ClearFilters, Container, GetOffers } from "./styles";
 import { Row, Column } from "../../../styles/grid";
 import { Field, Label } from "../../../styles/form";
 import CheckBox from "../../FormComponents/CheckBox";
@@ -63,6 +63,13 @@ export default function SearchForm() {
     const resp = await getVersions(modelId);
     setVersions(resp);
   }, []);
+
+  const clearFilters = () => {
+    setModels([]);
+    setVersions([]);
+    setSelectedMake(false);
+    setSelectedVersion(false);
+  };
 
   useEffect(() => {
     fetchMakes();
@@ -147,6 +154,22 @@ export default function SearchForm() {
               disabled={versions.length === 0}
             />
           </Field>
+        </Column>
+      </Row>
+
+      <Row>
+        <Column size={6}>
+          <AdvancedSearch href="#">Busca Avançada</AdvancedSearch>
+        </Column>
+
+        <Column size={2}>
+          <ClearFilters onClick={() => clearFilters()}>
+            Limpar Filtros
+          </ClearFilters>
+        </Column>
+
+        <Column size={4}>
+          <GetOffers>Ver Ofertas</GetOffers>
         </Column>
       </Row>
     </Container>
