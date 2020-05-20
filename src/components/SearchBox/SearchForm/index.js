@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { Container } from "./styles";
 import { Row, Column } from "../../../styles/grid";
-import { Field, Label, Select } from "../../../styles/form";
+import { Field, Label } from "../../../styles/form";
 import CheckBox from "../../FormComponents/CheckBox";
 
+import { getMakes } from "../../../services/api";
+
 import { FiMapPin } from "react-icons/fi";
+import Select from "../../FormComponents/Select";
 
 export default function SearchForm() {
+  const [makes, setMakes] = useState([]);
+  const [selectedMake, setSelectedMake] = useState(null);
+
+  const fetchMakes = useCallback(async () => {
+    const resp = await getMakes();
+
+    setMakes(resp);
+  }, []);
+
+  useEffect(() => {
+    fetchMakes();
+  }, [fetchMakes]);
+
   return (
     <Container>
       <Row>
@@ -30,10 +46,12 @@ export default function SearchForm() {
 
         <Column size={3}>
           <Field>
-            <Select>
-              <Label>Marca</Label>
-              <span className="value">Todas</span>
-            </Select>
+            <Select
+              label="Marca"
+              placeHolder="Todas"
+              options={makes}
+              onSelected={setSelectedMake}
+            />
           </Field>
         </Column>
       </Row>

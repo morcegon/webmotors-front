@@ -8,6 +8,7 @@ export const Field = styled.div`
   border-width: 0.1rem;
   display: flex;
   padding: 0.5em 0.5em;
+  position: relative;
 
   &:hover {
     &:not([disabled]) {
@@ -33,17 +34,4 @@ export const Label = styled.span`
   color: gray;
   font-size: 1.4rem;
   margin-right: 0.5rem;
-`;
-
-export const Select = styled.div`
-  width: 100%;
-
-  &::after {
-    border-color: black;
-    border-style: solid;
-    border-width: 0.5rem 0.5rem 0.5rem 0;
-    content: "";
-    height: 0;
-    width: 0;
-  }
 `;
